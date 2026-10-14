@@ -1,0 +1,41 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Panel administrativo";
+}
+<section>
+    <span class="eyebrow">ADMINISTRACIÓN</span>
+    <h1>Panel administrativo</h1>
+    <div class="stats">
+        <div class="stat"><small>Tickets vendidos</small><strong>@Model.TicketsVendidos</strong></div>
+        <div class="stat"><small>Vehículos dentro</small><strong>@Model.VehiculosDentro</strong></div>
+        <div class="stat"><small>Salidas completadas</small><strong>@Model.SalidasCompletadas</strong></div>
+        <div class="stat"><small>Recaudación</small><strong>L @Model.Recaudacion.ToString("0.00")</strong></div>
+    </div>
+    <div class="card table-wrap">
+        <h2>Historial de tickets</h2>
+        @if (Model.Tickets.Count == 0)
+        {
+            <p class="muted">Todavía no hay tickets registrados.</p>
+        }
+        else
+        {
+            <table class="admin-table">
+                <thead><tr><th>Placa</th><th>Tipo</th><th>Precio</th><th>Compra</th><th>Estado</th><th>Entrada</th><th>Salida</th></tr></thead>
+                <tbody>
+                @foreach (var item in Model.Tickets)
+                {
+                    <tr>
+                        <td>@item.Placa</td>
+                        <td>@item.TipoVehiculo</td>
+                        <td>L @item.Precio.ToString("0.00")</td>
+                        <td>@item.FechaCompra.ToString("dd/MM HH:mm")</td>
+                        <td><span class="status @item.Estado.ToString().ToLowerInvariant()">@item.Estado</span></td>
+                        <td>@(item.FechaEntrada?.ToString("HH:mm") ?? "—")</td>
+                        <td>@(item.FechaSalida?.ToString("HH:mm") ?? "—")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    </div>
+</section>

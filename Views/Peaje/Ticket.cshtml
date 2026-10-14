@@ -1,0 +1,21 @@
+@model Ticket
+@{
+    ViewData["Title"] = "Ticket generado";
+}
+<section class="ticket card">
+    <div class="success-icon">✓</div>
+    <span class="eyebrow">COMPRA COMPLETADA</span>
+    <h1>Ticket digital generado</h1>
+    <p>Guarde este código. Se utilizará primero en la entrada y después en la salida de la plaza.</p>
+    <div class="ticket-code" id="ticketCode">@Model.Codigo</div>
+    <button class="btn secondary" type="button" onclick="copiarCodigo()">Copiar código</button>
+    <dl class="ticket-details">
+        <div><dt>Placa</dt><dd>@Model.Placa</dd></div>
+        <div><dt>Vehículo</dt><dd>@Model.TipoVehiculo</dd></div>
+        <div><dt>Pago</dt><dd>@Model.FormaPago</dd></div>
+        <div><dt>Total</dt><dd>L @Model.Precio.ToString("0.00")</dd></div>
+        <div><dt>Fecha</dt><dd>@Model.FechaCompra.ToString("dd/MM/yyyy HH:mm")</dd></div>
+        <div><dt>Estado</dt><dd>@Model.Estado</dd></div>
+    </dl>
+    <a class="btn primary" asp-action="Validar">Ir a validar ticket</a>
+</section>

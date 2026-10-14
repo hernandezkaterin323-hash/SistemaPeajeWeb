@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Plaza Génesis</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" asp-controller="Home" asp-action="Index" aria-label="Plaza Génesis inicio">
+        <div class="brand-script"><span>PLAZA</span>Génesis</div>
+        <small>⌖ Sonaguera, Colón</small>
+    </a>
+    <nav class="main-nav" aria-label="Navegación principal">
+        <a asp-controller="Home" asp-action="Index"><span class="nav-icon">⌂</span>Inicio</a>
+        <a asp-controller="Peaje" asp-action="Comprar"><span class="nav-icon">▰</span>Comprar Ticket</a>
+        <a asp-controller="Peaje" asp-action="ValidarEntrada"><span class="nav-icon">↪</span>Validar Entrada</a>
+        <a asp-controller="Peaje" asp-action="ValidarSalida"><span class="nav-icon">↪</span>Validar Salida</a>
+        <a asp-controller="Peaje" asp-action="Admin"><span class="nav-icon">▥</span>Administración</a>
+    </nav>
+    <div class="header-clock">
+        <strong id="clockTime">--:--</strong>
+        <span id="clockDate">--</span>
+    </div>
+</header>
+
+<main>
+    @RenderBody()
+</main>
+
+<footer class="benefits-footer">
+    <div><span class="footer-icon">◷</span><p><strong>Seguro</strong><br><small>Control de acceso automatizado</small></p></div>
+    <div><span class="footer-icon">▰</span><p><strong>Rápido</strong><br><small>Ingreso en segundos</small></p></div>
+    <div><span class="footer-icon">◆</span><p><strong>Cómodo</strong><br><small>Estacionamiento organizado</small></p></div>
+    <div><span class="footer-icon">▦</span><p><strong>Plaza Génesis</strong><br><small>Sonaguera, Colón</small></p></div>
+</footer>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

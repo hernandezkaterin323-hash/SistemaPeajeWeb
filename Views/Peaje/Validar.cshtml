@@ -1,0 +1,37 @@
+@model ValidarTicketViewModel
+@{
+    var entrada = Model.Punto == "Entrada";
+    ViewData["Title"] = entrada ? "Validar Entrada" : "Validar Salida";
+    var actionName = entrada ? "ValidarEntrada" : "ValidarSalida";
+}
+<section class="hero-ticket compact-hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-copy">
+        <h1>@(entrada ? "Validar Entrada" : "Validar Salida")</h1>
+        <p>@(entrada ? "Autorice el ingreso del vehículo" : "Autorice la salida del vehículo")</p>
+    </div>
+</section>
+<section class="content-narrow">
+    <div class="step-card validator-card">
+        <div class="step-heading"><span class="step-number">@(entrada ? "E" : "S")</span><div><h2>@(entrada ? "Control de entrada" : "Control de salida")</h2><p>Ingrese el código digital generado al comprar el ticket</p></div></div>
+        <form asp-action="@actionName" method="post">
+            <input asp-for="Punto" type="hidden" />
+            <label asp-for="Codigo" class="field-label"></label>
+            <input asp-for="Codigo" class="big-code-input" placeholder="PG-PDH1234-..." autocomplete="off" />
+            <span asp-validation-for="Codigo" class="validation"></span>
+            <button class="generate-btn" type="submit">Validar código y autorizar barrera</button>
+        </form>
+        @if (!string.IsNullOrWhiteSpace(Model.Mensaje))
+        {
+            <div class="result @(Model.Exito ? "ok" : "bad")">
+                <strong>@(Model.Exito ? "✓ AUTORIZADO" : "✕ ACCESO DENEGADO")</strong>
+                <span>@Model.Mensaje</span>
+            </div>
+        }
+    </div>
+    <aside class="step-card hardware-note">
+        <h2>Secuencia de la maqueta</h2>
+        <div class="hardware-flow"><span>Código válido</span><b>→</b><span>Arduino UNO</span><b>→</b><span>SG90</span><b>→</b><span>Pluma abre</span><b>→</b><span>HC-SR04</span><b>→</b><span>Pluma cierra</span></div>
+        <p>La web representa la autorización. La conexión física con Arduino se realiza en la etapa electrónica del proyecto.</p>
+    </aside>
+</section>
