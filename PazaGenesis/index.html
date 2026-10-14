@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plaza Génesis - Compra tu Ticket</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #eef5fb;
+            color: #17263a;
+        }
+
+        /* ---------- BARRA SUPERIOR ---------- */
+
+        header {
+            height: 92px;
+            background: #09243b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            width: 280px;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 14px;
+            font-weight: normal;
+            margin-top: -3px;
+        }
+
+        nav {
+            height: 100%;
+            display: flex;
+        }
+
+        nav button {
+            border: none;
+            background: transparent;
+            color: white;
+            padding: 0 28px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        nav button:hover,
+        nav .active {
+            background: #0877d1;
+        }
+
+        .date {
+            text-align: right;
+            width: 190px;
+            font-size: 14px;
+            line-height: 25px;
+        }
+
+        /* ---------- PORTADA ---------- */
+
+        .hero {
+            height: 195px;
+            background:
+                linear-gradient(rgba(0, 30, 55, .25), rgba(0, 30, 55, .25)),
+                url("https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1600&q=80")
+                center/cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 55px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 5px;
+        }
+
+        .hero p {
+            font-size: 20px;
+        }
+
+        /* ---------- CONTENEDOR ---------- */
+
+        .container {
+            max-width: 1250px;
+            margin: 18px auto;
+            display: grid;
+            grid-template-columns: 1.7fr 1fr;
+            gap: 18px;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .number {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #0a4678;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .section-title h2 {
+            font-size: 19px;
+        }
+
+        .description {
+            margin-left: 50px;
+            color: #657080;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd4dc;
+            border-radius: 7px;
+            font-size: 15px;
+            margin-bottom: 17px;
+        }
+
+        /* ---------- TIPOS DE VEHÍCULO ---------- */
+
+        .vehicles {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .vehicle {
+            border: 1px solid #d2d8df;
+            border-radius: 8px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            background: white;
+        }
+
+        .vehicle:hover {
+            border-color: #087bd1;
+        }
+
+        .vehicle.selected {
+            border: 2px solid #087bd1;
+            background: #eef8ff;
+        }
+
+        .vehicle-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        /* ---------- MÉTODO DE PAGO ---------- */
+
+        .payments {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .payment {
+            border: 1px solid #d2d8df;
+            border-radius: 7px;
+            padding: 14px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .payment.selected {
+            border: 2px solid #087bd1;
+            background: #eef8ff;
+        }
+
+        .card-data {
+            display: grid;
+            grid-template-columns: 1.6fr .8fr .6fr;
+            gap: 12px;
+        }
+
+        .generate {
+            width: 100%;
+            border: none;
+            border-radius: 7px;
+            padding: 15px;
+            background: #20ae59;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .generate:hover {
+            background: #168e47;
+        }
+
+        /* ---------- RESUMEN ---------- */
+
+        .summary-image {
+            width: 100%;
+            height: 155px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 10px 0 15px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #e1e5e9;
+            padding: 10px 0;
+        }
+
+        .summary-row strong {
+            color: #17263a;
+        }
+
+        .price-blue {
+            color: #087bd1;
+            font-weight: bold;
+        }
+
+        .info {
+            margin-top: 18px;
+            background: #e4f2ff;
+            padding: 15px;
+            border-radius: 8px;
+            color: #16619a;
+            line-height: 21px;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            background: #08355b;
+            color: white;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 25px 10%;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        footer div {
+            text-align: center;
+        }
+
+        footer strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+
+        @media (max-width: 900px) {
+            nav {
+                display: none;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .vehicles {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            footer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        PLAZA
+        <strong>Génesis</strong>
+        <span>📍 Sonaguera, Colón</span>
+    </div>
+
+    <nav>
+        <button class="active">⌂<br>Inicio</button>
+        <button>🎫<br>Comprar Ticket</button>
+        <button>↪<br>Validar Entrada</button>
+        <button>↩<br>Validar Salida</button>
+        <button>▦<br>Administración</button>
+    </nav>
+
+    <div class="date">
+        🕐 10:24 AM<br>
+        📅 29 Sep 2026
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <h1>Compra tu Ticket</h1>
+
+    <p>Ingreso al estacionamiento de Plaza Génesis</p>
+
+</section>
+
+
+<main class="container">
+
+    <!-- COLUMNA IZQUIERDA -->
+
+    <section>
+
+        <!-- INFORMACIÓN DEL VEHÍCULO -->
+
+        <div class="card">
+
+            <div class="section-title">
+
+                <div class="number">1</div>
+
+                <h2>Información del vehículo</h2>
+
+            </div>
+
+            <p class="description">
+                Ingrese la placa y seleccione el tipo de vehículo
+            </p>
+
+            <label>Placa del vehículo</label>
+
+            <input
+                id="placa"
+                type="text"
+                value="PDH1234"
+                placeholder="Ingrese la placa">
+
+
+            <label>Tipo de vehículo</label>
+
+            <div class="vehicles">
+
+                <div
+                    class="vehicle selected"
+                    onclick="seleccionarVehiculo(this, 'Automóvil', 20)">
+
+                    <div class="vehicle-icon">🚗</div>
+
+                    <div>Automóvil</div>
+
+                    <div class="price">L 20.00</div>
+
+                </div>
+
+
+                <div
+                    class="vehicle"
+                    onclick="seleccionarVehiculo(this, 'Motocicleta', 10)">
+
+                    <div class="vehicle-icon">🏍️</div>
+
+                    <div>Motocicleta</div>
+
+                    <div class="price">L 10.00</div>
+
+                </div>
+
+
+                <div
+                    class="vehicle"
+                    onclick="seleccionarVehiculo(this, 'Pickup', 30)">
+
+                    <div class="vehicle-icon">🛻</div>
+
+                    <div>Pickup</div>
+
+                    <div class="price">L 30.00</div>
+
+                </div>
+
+
+                <div
+                    class="vehicle"
+                    onclick="seleccionarVehiculo(this, 'Camión', 50)">
+
+                    <div class="vehicle-icon">🚚</div>
+
+                    <div>Camión</div>
+
+                    <div class="price">L 50.00</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MÉTODO DE PAGO -->
+
+        <div class="card">
+
+            <div class="section-title">
+
+                <div class="number">2</div>
+
+                <h2>Método de pago</h2>
+
+            </div>
+
+            <p class="description">
+                Seleccione la forma de pago (simulada)
+            </p>
+
+
+            <div class="payments">
+
+                <div
+                    class="payment selected"
+                    onclick="seleccionarPago(this)">
+
+                    💳 Tarjeta de crédito/débito
+
+                </div>
+
+                <div
+                    class="payment"
+                    onclick="seleccionarPago(this)">
+
+                    💵 Efectivo
+
+                </div>
+
+                <div
+                    class="payment"
+                    onclick="seleccionarPago(this)">
+
+                    📱 Transferencia
+
+                </div>
+
+            </div>
+
+
+            <div class="card-data">
+
+                <div>
+
+                    <label>Número de tarjeta</label>
+
+                    <input
+                        type="text"
+                        placeholder="1234 5678 9012 3456">
+
+                </div>
+
+                <div>
+
+                    <label>Fecha de expiración</label>
+
+                    <input
+                        type="text"
+                        placeholder="MM/AA">
+
+                </div>
+
+                <div>
+
+                    <label>CVV</label>
+
+                    <input
+                        type="text"
+                        placeholder="123">
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="generate"
+                onclick="generarTicket()">
+
+                💳 Generar Ticket ➜
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- COLUMNA DERECHA -->
+
+    <aside class="card">
+
+        <div class="section-title">
+
+            <div class="number">3</div>
+
+            <h2>Resumen del ticket</h2>
+
+        </div>
+
+        <p class="description">
+            Verifique la información antes de generar el ticket
+        </p>
+
+
+        <img
+            class="summary-image"
+            src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=1000&q=80"
+            alt="Estacionamiento">
+
+
+        <div class="summary-row">
+
+            <span>Placa:</span>
+
+            <strong id="resumenPlaca">PDH1234</strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>Tipo de vehículo:</span>
+
+            <strong id="resumenVehiculo">
+                Automóvil
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>Tarifa:</span>
+
+            <strong
+                class="price-blue"
+                id="resumenTarifa">
+                L 20.00
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>Plaza:</span>
+
+            <strong>Plaza Génesis</strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>Ubicación:</span>
+
+            <strong>Sonaguera, Colón</strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>Fecha y hora:</span>
+
+            <strong id="fecha"></strong>
+
+        </div>
+
+
+        <div class="info">
+
+            ℹ️ El ticket generado le servirá para la entrada y
+            salida del estacionamiento. Guarde su código.
+
+        </div>
+
+    </aside>
+
+</main>
+
+
+<footer>
+
+    <div>
+        <strong>◷ Seguro</strong>
+        Control de acceso automatizado
+    </div>
+
+    <div>
+        <strong>🚗 Rápido</strong>
+        Ingreso en segundos
+    </div>
+
+    <div>
+        <strong>🛡️ Cómodo</strong>
+        Estacionamiento vigilado
+    </div>
+
+    <div>
+        <strong>🏢 Plaza Génesis</strong>
+        Sonaguera, Colón
+    </div>
+
+</footer>
+
+
+<script>
+
+    let tipoVehiculo = "Automóvil";
+    let tarifa = 20;
+
+
+    function seleccionarVehiculo(elemento, tipo, precio) {
+
+        document
+            .querySelectorAll(".vehicle")
+            .forEach(v => v.classList.remove("selected"));
+
+        elemento.classList.add("selected");
+
+        tipoVehiculo = tipo;
+        tarifa = precio;
+
+        document.getElementById("resumenVehiculo").textContent = tipo;
+
+        document.getElementById("resumenTarifa").textContent =
+            "L " + precio.toFixed(2);
+    }
+
+
+    function seleccionarPago(elemento) {
+
+        document
+            .querySelectorAll(".payment")
+            .forEach(p => p.classList.remove("selected"));
+
+        elemento.classList.add("selected");
+    }
+
+
+    function generarTicket() {
+
+        const placa =
+            document.getElementById("placa").value.trim();
+
+        if (placa === "") {
+
+            alert("Por favor ingrese la placa del vehículo.");
+
+            return;
+        }
+
+
+        document.getElementById("resumenPlaca").textContent =
+            placa.toUpperCase();
+
+
+        const codigo =
+            "PG-" +
+            Math.floor(Math.random() * 900000 + 100000);
+
+
+        alert(
+            "¡Ticket generado correctamente!\\n\\n" +
+            "Código: " + codigo + "\\n" +
+            "Placa: " + placa.toUpperCase() + "\\n" +
+            "Vehículo: " + tipoVehiculo + "\\n" +
+            "Tarifa: L " + tarifa.toFixed(2)
+        );
+
+    }
+
+
+    function actualizarFecha() {
+
+        const ahora = new Date();
+
+        const fecha =
+            ahora.toLocaleDateString("es-HN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            });
+
+        const hora =
+            ahora.toLocaleTimeString("es-HN", {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+        document.getElementById("fecha").textContent =
+            fecha + " - " + hora;
+    }
+
+
+    actualizarFecha();
+
+</script>
+
+</body>
+</html>
